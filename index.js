@@ -86,7 +86,7 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
     // Step 4: Create vector store and upsert with batching
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex,
-      namespace,
+     
     });
 
     // Process in batches to avoid timeouts/rate limits
@@ -143,7 +143,7 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
 
 app.post('/query', express.json(), async (req, res) => {
   try {
-    const namespace = "6763088c-17a1-433d-9f7f-066974723312"
+   // const namespace = "6763088c-17a1-433d-9f7f-066974723312"
     //const namespace = req.session.namespace;
     const { question } = req.body;
     
@@ -154,8 +154,8 @@ app.post('/query', express.json(), async (req, res) => {
     const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME || "pdf-chat");
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex,
-      namespace,
-    });
+    
+    }); //not passing namespace 
 
     const results = await vectorStore.similaritySearch(question, 5); // Get more context
      
